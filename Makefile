@@ -10,7 +10,6 @@ INC_DIRS ?= CPPRP \
 	./CPPRP/generated \
 	./CPPRP/CPPBitReader.h \
 	./libs/rapidjson/include \
-	./libs/json/include \
 	CPPRPJSON
 
 SRCS := $(shell find $(SRC_DIRS) -maxdepth 1 -name *.cpp) ${SRC_FILES}
