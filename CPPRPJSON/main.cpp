@@ -143,3 +143,28 @@ int main(int argc, char* argv[])
 	//t.Stop();
 	//t2.Stop();
 }
+
+extern "C" const char* parseReplay(const char* filePath) {
+    static std::string result;
+    try {
+        auto replayFile = std::make_shared<CPPRP::ReplayFile>(filePath);
+        if (!replayFile->Load()) {
+            throw std::runtime_error("Cannot open file, it exists but cannot open.");
+        }
+        if (!replayFile->VerifyCRC(CPPRP::CrcCheck::CRC_Both)) {
+            throw std::runtime_error("CRC check failed! Replay file is probably corrupt or has been tampered with!");
+        }
+        replayFile->DeserializeHeader();
+        replayFile->Parse();
+
+        // Use RapidJSON for serialization
+        rapidjson::StringBuffer buffer;
+        rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+        SerializeReplay(writer, replayFile, true);
+
+        result = buffer.GetString();
+    } catch (const std::exception& e) {
+        result = std::string("Error parsing replay: ") + e.what();
+    }
+    return result.c_str();
+}

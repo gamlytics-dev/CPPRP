@@ -11,8 +11,7 @@
 #include <functional>
 #include "NetworkDataParsers.h"
 #include "PropertyParser.h"
-#include <format>
-
+// #include <format>
 namespace CPPRP
 {
 #ifdef PARSELOG_ENABLED
@@ -563,7 +562,7 @@ namespace CPPRP
 							{
 								const std::string_view typeName = replayFile->objects.at(typeId);
 								const std::string_view className = replayFile->objects.at(classId);
-								parseLog.push_back(std::format("New actor for {}, classname {}", typeName, className));
+								// parseLog.push_back(std::format("New actor for {}, classname {}", typeName, className));
 							}
 
 							if (HasInitialPosition(classId))
